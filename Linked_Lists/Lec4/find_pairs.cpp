@@ -44,34 +44,45 @@ void print(Node* head){
     cout << endl;
 }
 
-// Deleting all occurences of "key" in a DLL
-Node* deleteAllOccurences(Node* head, int key){
-    Node* temp = head;
-    while(temp != NULL){
-        if(temp->data == key){
-            if(temp == head) head = temp->next;
+// find the tail
+Node* findTail(Node* head){
+    Node* tail = head;
+    while(tail->next != NULL){
+        tail = tail->next;
+    }
+    return tail;
+}
 
-            Node* nextNode = temp->next;
-            Node* prevNode = temp->back;
-
-            if(nextNode) nextNode->back = prevNode;
-            if(prevNode) prevNode->next = nextNode;
-            
-            free(temp);
-            temp = nextNode;
+// find the pairs
+vector<pair<int, int>> findPair(Node* head, int sum){
+    vector<pair<int, int>> ans;
+    if(head == NULL) return ans;
+    Node* left = head;
+    Node* right = findTail(head);
+    while(left->data < right->data){
+        if(left->data + right->data == sum){
+            ans.push_back({left->data, right->data});
+            left = left->next;
+            right = right->back;
+        }
+        else if(left->data + right->data < sum){
+            left = left->next;
         }
         else{
-            temp = temp->next;
+            right = right->back;
         }
     }
-    return head;
+    return ans;
 }
 
 int main(){
-    vector<int> arr = {9, 9, 7, 5};
-    int key = 9;
+    vector<int> arr = {1, 2, 3, 4, 9};
+    int key = 5;
     Node* head = convertArr2DLL(arr);
-    head = deleteAllOccurences(head, key);
-    print(head);
+    vector<pair<int, int>> ans = findPair(head, key);
+    for(const auto& i : ans){
+        cout << "(" << i.first << "," << i.second << ")" << " ";
+    }
+    cout << endl;
     return 0;
 }

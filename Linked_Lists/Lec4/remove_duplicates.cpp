@@ -44,34 +44,27 @@ void print(Node* head){
     cout << endl;
 }
 
-// Deleting all occurences of "key" in a DLL
-Node* deleteAllOccurences(Node* head, int key){
+// remove duplicates from DLL
+Node* removeDuplicates(Node* head){
     Node* temp = head;
-    while(temp != NULL){
-        if(temp->data == key){
-            if(temp == head) head = temp->next;
-
-            Node* nextNode = temp->next;
-            Node* prevNode = temp->back;
-
-            if(nextNode) nextNode->back = prevNode;
-            if(prevNode) prevNode->next = nextNode;
-            
-            free(temp);
-            temp = nextNode;
+    while(temp != NULL && temp->next != NULL){
+        Node* nextNode = temp->next;
+        while(nextNode != NULL && nextNode->data == temp->data){
+            Node* duplicate = nextNode;
+            nextNode = nextNode->next;
+            delete(duplicate);
         }
-        else{
-            temp = temp->next;
-        }
+        temp->next = nextNode;
+        if(nextNode) nextNode->back = temp;
+        temp = temp->next;
     }
     return head;
 }
 
 int main(){
-    vector<int> arr = {9, 9, 7, 5};
-    int key = 9;
+    vector<int> arr = {1, 1, 1, 2, 3, 3, 4};
     Node* head = convertArr2DLL(arr);
-    head = deleteAllOccurences(head, key);
+    head = removeDuplicates(head);
     print(head);
     return 0;
 }
