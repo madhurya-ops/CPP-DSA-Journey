@@ -3,6 +3,7 @@
 using namespace std;
 
 // Least Frequently Used Cache
+// Reference: https://www.youtube.com/watch?v=mzqHlAW7jeE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=79
 struct Node{
     int key, value, cnt;
     Node* next;
