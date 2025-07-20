@@ -1,8 +1,9 @@
 #include<iostream>
 using namespace std;
-// First: find out the subarrays with sum <= k
-// Second: apply this formula to get only the subarrays with sum = K
-// Formula: func(arr, goal) - func(arr, goal - 1) 
+// nice: count of odd integers == K
+// exactly same as binary subarr with sum(prev prob)
+// consider: odd -> 1 and even -> 0
+// Formula: func(arr, goal) - func(arr, goal - 1)
 
 int findSubarrays(vector<int> &nums, int goal){
     if(goal < 0) return 0; // edge case
@@ -12,10 +13,10 @@ int findSubarrays(vector<int> &nums, int goal){
     int sum = 0;
 
     while(right < nums.size()){
-        sum += nums[right]; // increment the sum by adding each element
+        sum += (nums[right] % 2); // increment the sum by adding each element
         // decrement the sum and increase the left ptr when sum > goal
         while(sum > goal){
-            sum = sum - nums[left];
+            sum = sum - (nums[left] % 2);
             left++;
         }
         cnt = cnt + (right - left + 1); // subarrays for any element = length
@@ -24,12 +25,12 @@ int findSubarrays(vector<int> &nums, int goal){
     return cnt;
 }
 
-int numSubarraysWithSum(vector<int>& nums, int goal) {
-    return findSubarrays(nums, goal) - findSubarrays(nums, goal -1);
+int numberOfSubarrays(vector<int>& nums, int k) {
+    return findSubarrays(nums, k) - findSubarrays(nums, k -1);
 }
 
 int main(){
-vector<int> nums = {1, 0, 0, 1, 1, 0};
-int goal = 2;
-cout << numSubarraysWithSum(nums, goal);
+vector<int> arr = {1, 1, 2, 1, 1};
+int k = 3;
+cout << numberOfSubarrays(arr, k);
 }
