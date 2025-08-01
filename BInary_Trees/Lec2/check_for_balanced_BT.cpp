@@ -10,13 +10,25 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-// max depth of a tree (recursive soln)
-// formula: 1 + max(leftHeight, rightHeight)
-int maxDepth(TreeNode* root) {
+// calc the height of the tree
+// Balanced BT: height(left) - height(right) <= 1
+// return the height inside a bool func
+// if bool func return -1(false) then the tree is unbalanced
+int dfsHeight(TreeNode* root){
     if(root == NULL) return 0;
-    int leftHeight = maxDepth(root->left);
-    int rightHeight = maxDepth(root->right);
-    return 1 + max(leftHeight, rightHeight);
+        
+    int leftHeight = dfsHeight(root -> left);
+    if(leftHeight == -1) return -1;
+
+    int rightHeight = dfsHeight(root -> right);
+    if(rightHeight == -1) return -1;
+
+    if(abs(leftHeight - rightHeight) > 1) return -1;
+    return max(leftHeight, rightHeight) + 1;
+}
+
+bool isBalanced(TreeNode* root) {
+    return dfsHeight(root) != -1;      
 }
 
 int main(){
@@ -28,5 +40,5 @@ root ->right ->left = new TreeNode(4);
 root -> right -> right = new TreeNode(6);
 root -> right -> left -> left = new TreeNode(5);
 
-cout << maxDepth(root);
+cout << isBalanced(root);
 }
