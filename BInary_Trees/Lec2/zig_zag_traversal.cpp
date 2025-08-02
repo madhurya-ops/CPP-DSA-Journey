@@ -1,6 +1,12 @@
 #include<iostream>
 using namespace std;
 
+// steps of solving:
+// One: store all the elements of a level in the queue
+// Two: pop them out one by one:
+// Three: Store their children in the queue, at the same time reset the flag
+// Four: Store them in the ds, acc to the flag
+
 struct TreeNode {
     int val;
     TreeNode *left;
