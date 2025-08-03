@@ -29,7 +29,7 @@ vector<vector<int>> verticalTraversal(TreeNode* root) {
     }
     vector<vector<int>> ans;
     for(auto p : nodes){
-        vector<int> col;
+        vector<int> col; // stores all the elments in a level
         for(auto q : p.second){
             col.insert(col.end(), q.second.begin(), q.second.end());
         }
