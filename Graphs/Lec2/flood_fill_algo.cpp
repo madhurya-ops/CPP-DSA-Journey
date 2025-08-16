@@ -5,8 +5,14 @@ void dfs(int row, int col, vector<vector<int>>& ans, vector<vector<int>>& image,
     int newColor, int delRow[], int delCol[], int iniColor){
         int n = image.size();
         int m = image[0].size();
+
+        // set the starting node to the new color
         ans[row][col] = newColor;
+
+        // traverse the neighbouring node with the same initial color
+        // change them to new color
         for(int i = 0; i < 4; i++){
+            // checking for all the four neighbours
             int nRow = row + delRow[i];
             int nCol = col + delCol[i];
             if(nRow >= 0 && nRow < n && nCol >= 0 && nCol < m 
@@ -17,8 +23,9 @@ void dfs(int row, int col, vector<vector<int>>& ans, vector<vector<int>>& image,
 }
 
 vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-    int iniColor = image[sr][sc];
-    vector<vector<int>> ans = image;
+    int iniColor = image[sr][sc]; // store the initial color
+    vector<vector<int>> ans = image; // make a copy of the given matrix
+    // directions to trverse: top, right, bottom and left
     int delRow[] = {-1, 0, +1, 0};
     int delCol[] = {0, +1, 0, -1};
     dfs(sr, sc, ans, image, color, delRow, delCol, iniColor);
