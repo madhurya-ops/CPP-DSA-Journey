@@ -18,7 +18,7 @@ void topoSort(int node, vector<int> &vis, vector<pair<int, int>> adj[],
 // n -> number of nodes
 // m -> number of edges
 vector<int> shortestPath(int n, int m, vector<int> edges[]){
-    // create the graph 
+    // create the adj list 
     vector<pair<int, int>> adj[n];
     for(int i = 0; i < m; i++){
         int u = edges[i][0];
